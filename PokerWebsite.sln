@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PokerWebsite", "src\PokerWebsite\PokerWebsite.xproj", "{0166EBC9-016A-412E-9245-23EF17DE454F}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PokerWebsiteTests", "src\PokerWebsiteTests\PokerWebsiteTests.xproj", "{9F7421B4-730E-4031-BF39-2A38B843190B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,11 +24,16 @@ Global
 		{0166EBC9-016A-412E-9245-23EF17DE454F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0166EBC9-016A-412E-9245-23EF17DE454F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0166EBC9-016A-412E-9245-23EF17DE454F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F7421B4-730E-4031-BF39-2A38B843190B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F7421B4-730E-4031-BF39-2A38B843190B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F7421B4-730E-4031-BF39-2A38B843190B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F7421B4-730E-4031-BF39-2A38B843190B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0166EBC9-016A-412E-9245-23EF17DE454F} = {4E6ADA62-0D23-4A7F-A912-84DC75766E9D}
+		{9F7421B4-730E-4031-BF39-2A38B843190B} = {4E6ADA62-0D23-4A7F-A912-84DC75766E9D}
 	EndGlobalSection
 EndGlobal

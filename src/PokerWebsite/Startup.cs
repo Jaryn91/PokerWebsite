@@ -7,6 +7,8 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PokerWebsite.Persistence;
+using Microsoft.Data.Entity;
 
 namespace PokerWebsite
 {
@@ -26,8 +28,14 @@ namespace PokerWebsite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             // Add framework services.
             services.AddMvc();
+
+            services.AddEntityFramework().AddSqlServer().AddDbContext<AppContext>(options =>
+            {
+                options.UseSqlServer(Configuration["Data:ConnectionString"]);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
