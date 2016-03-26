@@ -1,12 +1,13 @@
-﻿using PokerWebsite.Core.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace PokerWebsite.Core.Repositories
 {
-    public interface IPlayerRepository : IRepository<Player>
+    public interface IUnitOfWork : IDisposable
     {
+        IPlayerRepository Players { get; }
+        int Complete();
     }
 }

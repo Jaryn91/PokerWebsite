@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PokerWebsite.Persistence
 {
-    public class AppContext : DbContext
+    public class ApplicationContext : DbContext
     {
         public DbSet<Player> Players { get; set; }
         public DbSet<Tournament> Tournaments { get; set; }

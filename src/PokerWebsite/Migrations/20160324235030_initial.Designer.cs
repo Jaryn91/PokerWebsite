@@ -7,7 +7,7 @@ using PokerWebsite.Persistence;
 
 namespace PokerWebsite.Migrations
 {
-    [DbContext(typeof(AppContext))]
+    [DbContext(typeof(ApplicationContext))]
     [Migration("20160324235030_initial")]
     partial class initial
     {

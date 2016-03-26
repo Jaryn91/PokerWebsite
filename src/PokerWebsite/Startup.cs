@@ -28,14 +28,14 @@ namespace PokerWebsite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddEntityFramework()
+                .AddSqlServer()
+                .AddDbContext<ApplicationContext>(options =>
+                    options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+
 
             // Add framework services.
             services.AddMvc();
-
-            services.AddEntityFramework().AddSqlServer().AddDbContext<AppContext>(options =>
-            {
-                options.UseSqlServer(Configuration["Data:ConnectionString"]);
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

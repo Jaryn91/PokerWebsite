@@ -1,6 +1,7 @@
 ﻿using Moq;
 using PokerWebsite.Core.Domain;
 using PokerWebsite.Core.Repositories;
+using PokerWebsite.Persistence;
 using Xunit;
 
 namespace PokerWebsiteTests
@@ -10,6 +11,11 @@ namespace PokerWebsiteTests
         [Fact]
         public void PassingTest()
         {
+            using (var unitOfWork = new UnitOfWork(new ApplicationContext()))
+            {
+                // Example1
+                var players = unitOfWork.Players.GetAll();
+            }
             var mock = new Mock<IPlayerRepository>();
             var player = new Player();
             Assert.Equal(4, Add(2, 2));
