@@ -28,7 +28,7 @@ namespace PokerWebsite.Persistence.Repositories
 
         public IEnumerable<TEntity> GetAll()
         {
-            return Context.Set<TEntity>().ToList();
+            return Context.Set<TEntity>();
         }
 
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)

@@ -28,11 +28,11 @@ namespace PokerWebsite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration["Data:DefaultConnection:ConnectionString"];
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<ApplicationContext>(options =>
-                    options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
-
+                    options.UseSqlServer(connectionString));
 
             // Add framework services.
             services.AddMvc();

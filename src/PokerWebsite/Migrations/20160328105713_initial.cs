@@ -52,35 +52,17 @@ namespace PokerWebsite.Migrations
                     table.PrimaryKey("PK_Player", x => x.ID);
                 });
             migrationBuilder.CreateTable(
-                name: "PokerWebsite.Core.Domain.Tournaments",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    NumberOfPlayers = table.Column<int>(nullable: false),
-                    Season = table.Column<int>(nullable: false),
-                    WinnerImageID = table.Column<int>(nullable: true),
-                    Year = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tournament", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Tournament_Image_WinnerImageID",
-                        column: x => x.WinnerImageID,
-                        principalTable: "PokerWebsite.Core.Domain.Images",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-            migrationBuilder.CreateTable(
                 name: "PokerWebsite.Core.Domain.Venues",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Address = table.Column<string>(nullable: true),
+                    Day = table.Column<int>(nullable: false),
                     Descrition = table.Column<string>(nullable: true),
+                    Hour = table.Column<int>(nullable: false),
                     ImageID = table.Column<int>(nullable: true),
+                    Minute = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -119,12 +101,42 @@ namespace PokerWebsite.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
             migrationBuilder.CreateTable(
+                name: "PokerWebsite.Core.Domain.Tournaments",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Date = table.Column<DateTime>(nullable: false),
+                    NumberOfPlayers = table.Column<int>(nullable: false),
+                    Season = table.Column<int>(nullable: false),
+                    VenueID = table.Column<int>(nullable: true),
+                    WinnerImageID = table.Column<int>(nullable: true),
+                    Year = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tournament", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Tournament_Venue_VenueID",
+                        column: x => x.VenueID,
+                        principalTable: "PokerWebsite.Core.Domain.Venues",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Tournament_Image_WinnerImageID",
+                        column: x => x.WinnerImageID,
+                        principalTable: "PokerWebsite.Core.Domain.Images",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+            migrationBuilder.CreateTable(
                 name: "PokerWebsite.Core.Domain.Results",
                 columns: table => new
                 {
                     PlayerID = table.Column<int>(nullable: false),
                     TournamentID = table.Column<int>(nullable: false),
-                    ID = table.Column<int>(nullable: false),
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Place = table.Column<int>(nullable: false),
                     Points = table.Column<int>(nullable: false)
                 },
@@ -150,10 +162,10 @@ namespace PokerWebsite.Migrations
         {
             migrationBuilder.DropTable("PokerWebsite.Core.Domain.PlayerAchievements");
             migrationBuilder.DropTable("PokerWebsite.Core.Domain.Results");
-            migrationBuilder.DropTable("PokerWebsite.Core.Domain.Venues");
             migrationBuilder.DropTable("PokerWebsite.Core.Domain.Achievements");
             migrationBuilder.DropTable("PokerWebsite.Core.Domain.Players");
             migrationBuilder.DropTable("PokerWebsite.Core.Domain.Tournaments");
+            migrationBuilder.DropTable("PokerWebsite.Core.Domain.Venues");
             migrationBuilder.DropTable("PokerWebsite.Core.Domain.Images");
         }
     }

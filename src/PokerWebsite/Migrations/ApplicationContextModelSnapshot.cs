@@ -8,10 +8,9 @@ using PokerWebsite.Persistence;
 namespace PokerWebsite.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20160324235030_initial")]
-    partial class initial
+    partial class ApplicationContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -86,7 +85,8 @@ namespace PokerWebsite.Migrations
 
                     b.Property<int>("TournamentID");
 
-                    b.Property<int>("ID");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("Place");
 
@@ -102,9 +102,13 @@ namespace PokerWebsite.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("Date");
+
                     b.Property<int>("NumberOfPlayers");
 
                     b.Property<int>("Season");
+
+                    b.Property<int?>("VenueID");
 
                     b.Property<int?>("WinnerImageID");
 
@@ -122,9 +126,15 @@ namespace PokerWebsite.Migrations
 
                     b.Property<string>("Address");
 
+                    b.Property<int>("Day");
+
                     b.Property<string>("Descrition");
 
+                    b.Property<int>("Hour");
+
                     b.Property<int?>("ImageID");
+
+                    b.Property<int>("Minute");
 
                     b.Property<string>("Name");
 
@@ -157,6 +167,10 @@ namespace PokerWebsite.Migrations
 
             modelBuilder.Entity("PokerWebsite.Core.Domain.Tournament", b =>
                 {
+                    b.HasOne("PokerWebsite.Core.Domain.Venue")
+                        .WithMany()
+                        .HasForeignKey("VenueID");
+
                     b.HasOne("PokerWebsite.Core.Domain.Image")
                         .WithMany()
                         .HasForeignKey("WinnerImageID");

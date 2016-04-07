@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
-using PokerWebsite.Persistence.Repositories;
+﻿using Microsoft.AspNet.Mvc;
 using PokerWebsite.Persistence;
 
 namespace PokerWebsite.Controllers
