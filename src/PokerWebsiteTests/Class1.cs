@@ -2,6 +2,7 @@
 using Moq;
 using PokerWebsite.Core.Domain;
 using PokerWebsite.Core.Repositories;
+using PokerWebsite.ModelView;
 using PokerWebsite.Persistence;
 using PokerWebsite.Persistence.Repositories;
 using System;
@@ -14,32 +15,90 @@ namespace PokerWebsiteTests
     public class Class1
     {
         [Fact]
-        public void PassingTest()
+        public void order_players_by_amount_points_in_season()
         {
-            var data = TestContext.GetTestContext();
+            var testContext = new TestContext();
+            var data = testContext.PlayerContext();
+            var mockContext = testContext.MockPlayers(data);
+            var playerRepository = new PlayerRepository(mockContext.Object);
 
-            var mockSet = new Mock<DbSet<Player>>();
-            mockSet.As<IQueryable<Player>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<Player>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<Player>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<Player>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+            var actualStatistics = playerRepository.GetTopSeasonPlayers(2016, 1, 10);
 
-            var mockContext = new Mock<ApplicationContext>();
-            mockContext.Setup(m => m.Set<Player>()).Returns(mockSet.Object);
+            var expectedStatistics = new List<PlayerStatistics>() {
+                new PlayerStatistics("Michał", "Wiśniewski", 17.5, 35),
+                new PlayerStatistics("Andrzej", "Gołota", 15, 30),
+                new PlayerStatistics("Zdzisław", "Kręcina", 25, 25),
+                new PlayerStatistics("Andrzej", "Duda", 10, 20),
+                new PlayerStatistics("Maryla", "Rodowicz", 7.5, 15)
+            };
 
-            var service = new PlayerRepository(mockContext.Object);
-            var playersStatistics = service.GetTopSeasonPlayers(2016, 1, 10);
+            Assert.Equal(expectedStatistics, actualStatistics);
         }
 
         [Fact]
-        public void FailingTest()
+        public void order_players_by_average_points_in_season()
         {
-            Assert.Equal(5, Add(2, 2));
+            var testContext = new TestContext();
+            var data = testContext.PlayerContext();
+            var mockContext = testContext.MockPlayers(data);
+            var playerRepository = new PlayerRepository(mockContext.Object);
+
+            var actualStatistics = playerRepository.GetTopAverageSeasonPlayers(2016, 1, 10);
+
+            var expectedStatistics = new List<PlayerStatistics>() {
+                new PlayerStatistics("Zdzisław", "Kręcina", 25, 25),
+                new PlayerStatistics("Michał", "Wiśniewski", 17.5, 35),
+                new PlayerStatistics("Andrzej", "Gołota", 15, 30),
+                new PlayerStatistics("Andrzej", "Duda", 10, 20),
+                new PlayerStatistics("Maryla", "Rodowicz", 7.5, 15)
+            };
+
+            Assert.Equal(expectedStatistics, actualStatistics);
         }
 
-        int Add(int x, int y)
+        [Fact]
+        public void venus_are_ordered_by_day_of_week()
         {
-            return x + y;
+            var testContext = new TestContext();
+            var data = testContext.VenueContext();
+            var mockContext = testContext.MockVenues(data);
+            var veunesRepository = new VenueRepository(mockContext.Object);
+
+            var orderedVenues = veunesRepository.OrderByDay();
+
+            Assert.Equal(data.ElementAt(0), orderedVenues.ElementAt(0));
+            Assert.Equal(data.ElementAt(2), orderedVenues.ElementAt(1));
+            Assert.Equal(data.ElementAt(1), orderedVenues.ElementAt(2));
+        }
+
+        [Fact]
+        public void results_for_player()
+        {
+            var testContext = new TestContext();
+            var data = testContext.PlayerContext();
+            var mockContext = testContext.MockPlayers(data);
+            var playerRepository = new PlayerRepository(mockContext.Object);
+
+            var player0 = data.ElementAt(0);
+            var resultsForPlayer0 = playerRepository.GetPlayersResuls(player0, 2016, 1);
+
+            var player1 = data.ElementAt(0);
+            var resultsForPlayer1 = playerRepository.GetPlayersResuls(player1, 2016, 1);
+
+            var player2 = data.ElementAt(0);
+            var resultsForPlayer2 = playerRepository.GetPlayersResuls(player2, 2016, 1);
+
+            var player3 = data.ElementAt(0);
+            var resultsForPlayer3 = playerRepository.GetPlayersResuls(player3, 2016, 1);
+
+            var player4 = data.ElementAt(0);
+            var resultsForPlayer4 = playerRepository.GetPlayersResuls(player4, 2016, 1);
+
+            Assert.Equal(2, resultsForPlayer0.Count());
+            Assert.Equal(2, resultsForPlayer1.Count());
+            Assert.Equal(2, resultsForPlayer2.Count());
+            Assert.Equal(2, resultsForPlayer3.Count());
+            Assert.Equal(1, resultsForPlayer4.Count());
         }
     }
 

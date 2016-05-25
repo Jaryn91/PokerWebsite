@@ -1,0 +1,47 @@
+﻿@model List<PokerWebsite.Core.Domain.Result>
+@inject IJsonHelper Json;
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="//www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load('visualization', '1', { packages: ['corechart'] });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            drawChart();
+        });
+
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('date', 'Data gry');
+            data.addColumn('number', 'Zdobyte punkty');
+
+            var model = @Html.Raw(@Json.Serialize(Model));
+
+            for (var i = 0; i < model.length; i++) {
+                var date = new Date(model[i].Tournament.Date);
+                data.addRow([date, model[i].Points]);
+            }
+
+            var options = {
+                title: 'Forma zawodnika',
+                curveType: 'function',
+                legend: { position: 'bottom' }
+            };
+
+            new google.visualization.LineChart(document.getElementById('chart')).draw(data, options);
+        }
+        
+    </script>
+</head>
+<body>
+    <form id="form">
+        <div id="chart" style="width: 600px; height: 350px;">
+        </div>
+    </form>
+</body>
+</html>

@@ -11,11 +11,13 @@ namespace PokerWebsite.Persistence
     {
         private readonly ApplicationContext _context;
         public IPlayerRepository Players { get; private set; }
+        public IVenueRepository Venues { get; private set; }
 
         public UnitOfWork(ApplicationContext context)
         {
             _context = context;
             Players = new PlayerRepository(_context);
+            Venues = new VenueRepository(_context);
         }
 
         public int Complete()

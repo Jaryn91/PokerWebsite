@@ -10,7 +10,7 @@ namespace PokerWebsite.ModelView
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public decimal Average { get; set; }
+        public double Average { get; set; }
         public int Sum { get; set; }
 
         public PlayerStatistics(Player player, IEnumerable<Result> results)
@@ -21,8 +21,28 @@ namespace PokerWebsite.ModelView
             var sum = results.Sum(r => r.Points);
             Sum = sum;
 
-            var average = sum / results.Count();
+            var average = (double) sum / results.Count();
             Average = average;
+        }
+
+        public PlayerStatistics(string name, string surname, double average, int sum)
+        {
+            Name = name;
+            Surname = surname;
+            Average = average;
+            Sum = sum;
+        }
+
+
+        public override bool Equals(object obj)
+        {
+            var toCompareWith = obj as PlayerStatistics;
+            if (toCompareWith == null)
+                return false;
+            return this.Name == toCompareWith.Name &&
+                this.Surname == toCompareWith.Surname &&
+                this.Sum == toCompareWith.Sum &&
+                this.Average == toCompareWith.Average;          
         }
     }
 }

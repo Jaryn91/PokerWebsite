@@ -11,5 +11,6 @@ namespace PokerWebsite.Core.Repositories
     {
         IEnumerable<PlayerStatistics> GetTopSeasonPlayers(int year, int season, int top);
         IEnumerable<PlayerStatistics> GetTopPlayersInVenue(Venue venue, int year, int season, int top);
+        IEnumerable<Result> GetPlayersResuls(Player player, int year, int season);
     }
 }
